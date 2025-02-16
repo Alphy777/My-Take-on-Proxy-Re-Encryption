@@ -1,9 +1,10 @@
 document.addEventListener("DOMContentLoaded", function () {
+    console.log("✅ auth.js loaded"); // Debugging to check if auth.js is running
     const loginForm = document.getElementById("login-form");
     const signupForm = document.getElementById("signup-form");
     const logoutBtn = document.getElementById("logout-btn");
 
-    // ✅ Handle Sign-up
+    // ✅ Handle Signup
     if (signupForm) {
         signupForm.addEventListener("submit", async function (event) {
             event.preventDefault();
@@ -22,24 +23,14 @@ document.addEventListener("DOMContentLoaded", function () {
                 return;
             }
 
-            try {
-                let response = await fetch("http://127.0.0.1:5000/register", {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ username, password })
-                });
+            let response = await fetch("http://127.0.0.1:5000/register", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ username, password })
+            });
 
-                let result = await response.json();
-                if (result.status) {
-                    alert("Registration successful! Please log in.");
-                    signupForm.reset(); // ✅ Clear the signup form
-                } else {
-                    alert(result.error);
-                }
-            } catch (error) {
-                console.error("Signup error:", error);
-                alert("An error occurred. Please try again.");
-            }
+            let result = await response.json();
+            alert(result.status || result.error);
         });
     }
 
@@ -51,29 +42,18 @@ document.addEventListener("DOMContentLoaded", function () {
             let username = document.getElementById("login_username").value.trim();
             let password = document.getElementById("login_password").value.trim();
 
-            if (!username || !password) {
-                alert("Please enter both username and password.");
-                return;
-            }
+            let response = await fetch("http://127.0.0.1:5000/login", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ username, password })
+            });
 
-            try {
-                let response = await fetch("http://127.0.0.1:5000/login", {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ username, password })
-                });
-
-                let result = await response.json();
-                if (result.status === "success") {
-                    localStorage.setItem("username", username);
-                    localStorage.setItem("privateKey", result.private_key); // ✅ Store private key for decryption
-                    window.location.href = "message.html"; // ✅ Redirect to chat
-                } else {
-                    alert(result.error);
-                }
-            } catch (error) {
-                console.error("Login error:", error);
-                alert("An error occurred. Please try again.");
+            let result = await response.json();
+            if (result.status === "Login successful") {
+                localStorage.setItem("username", result.username);  // ✅ Store username from API
+                window.location.href = "message.html"; // ✅ Redirect to chat
+            } else {
+                alert(result.error);
             }
         });
     }
@@ -81,7 +61,14 @@ document.addEventListener("DOMContentLoaded", function () {
     // ✅ Handle Logout
     if (logoutBtn) {
         logoutBtn.addEventListener("click", function () {
+            console.log("🔄 Logout button clicked");
+
             let username = localStorage.getItem("username");
+
+            if (!username) {
+                alert("You're not logged in!");
+                return;
+            }
 
             fetch("http://127.0.0.1:5000/logout", {
                 method: "POST",
@@ -90,35 +77,11 @@ document.addEventListener("DOMContentLoaded", function () {
             })
             .then(response => response.json())
             .then(data => {
-                console.log(data.status);
-                localStorage.removeItem("username");
-                localStorage.removeItem("privateKey");
-                window.location.href = "login.html"; // ✅ Redirect to login
+                console.log("✅ Logout response:", data);
+                localStorage.removeItem("username"); // ✅ Only remove the logged-out user's session
+                window.location.href = "login.html"; // ✅ Redirect to login page
             })
-            .catch(err => console.error("Logout error:", err));
+            .catch(err => console.error("❌ Logout error:", err));
         });
     }
-});
-document.getElementById("login-form").addEventListener("submit", function(event) {
-    event.preventDefault(); // Prevent page reload
-    
-    let username = document.getElementById("username").value;
-    let password = document.getElementById("password").value;
-
-    fetch("/login", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify({ username: username, password: password })
-    })
-    .then(response => response.json()) 
-    .then(data => {
-        if (data.message) {
-            alert("Login successful");
-        } else {
-            alert("Login failed: " + data.error);
-        }
-    })
-    .catch(error => console.error("Login error:", error));
 });

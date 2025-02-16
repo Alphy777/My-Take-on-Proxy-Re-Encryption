@@ -1,20 +1,20 @@
 import sqlite3
 import os
 
-# Get the absolute path of the parent directory (AEDA/)
-BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
-DB_PATH = os.path.join(BASE_DIR, "users.db")  # Correct path
+# Define database path inside the main folder (Proxy Re-Encryption/)
+DB_PATH = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "users.db"))
 
 # Create or open the database
 conn = sqlite3.connect(DB_PATH)
 cursor = conn.cursor()
 
-# Create users table if it doesn’t exist
+# ✅ Ensure `users` table has all required columns
 cursor.execute('''
     CREATE TABLE IF NOT EXISTS users (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         username TEXT UNIQUE NOT NULL,
-        password TEXT NOT NULL
+        password TEXT NOT NULL,
+        is_online INTEGER DEFAULT 0  -- 0 = Offline, 1 = Online
     )
 ''')
 
