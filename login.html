@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AEDA-Login/Sign-up</title>
+  <link rel="icon" href="images/AEDA.png">
+  <link rel="stylesheet" href="css/loginstyle.css">
+</head>
+<body>
+  <div class="container" id="container">
+    <!-- Login Section -->
+    <div class="form-container login-container">
+      <form id="login-form" action="#">
+        <h1>Login Now</h1>
+        <input type="text" id="login_username" placeholder="Username" required />
+        <input type="password" id="login_password" placeholder="Password" required />
+        <button type="submit">Sign In</button>
+        <a href="#">Forgot your password?</a>
+      </form>
+    </div>
+
+    <!-- Sign Up Section -->
+    <div class="form-container sign-up-container">
+      <form id="signup-form" action="#">
+        <h1>Register Now</h1>
+        <input type="text" id="signup_username" placeholder="Username" required />
+        <input type="password" id="signup_password" placeholder="Password" required />
+        <input type="password" id="signup_password_re" placeholder="Re-enter password" required />
+        <button type="submit">Sign Up</button>
+      </form>
+    </div>
+
+    <!-- Overlay Section -->
+    <div class="overlay-container">
+      <div class="overlay">
+        <div class="overlay-panel overlay-left">
+          <h1>Do you have an account already?</h1>
+          <p>Click the button to log in.</p>
+          <button class="ghost" id="signIn">Sign In</button>
+        </div>
+        <div class="overlay-panel overlay-right">
+          <h1>Hey there, are you new here?</h1>
+          <p>Click the button to register.</p>
+          <button class="ghost" id="signUp">Sign Up</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/main.js"></script>
+  <script src="js/auth.js"></script>
+</body>
+</html>

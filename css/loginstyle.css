@@ -1,0 +1,220 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Josefin+Sans&display=swap');
+
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Arial', sans-serif;
+  background: linear-gradient(to top, #020024, #090979, #0a2a5a);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+  font-family: "Josefin Sans";
+
+}
+
+/* Login Form Styles */
+form {
+  background: rgba(0, 0, 0, 0.6); /* Semi-transparent dark background */
+  border-radius: 10px; 
+  padding: 30px; 
+  width: 350px;
+  max-width: 100%;
+  margin: auto;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+}
+h1 {
+  font-size: 24px;
+  font-weight: bold;
+  color: #ffffff; /* Bright white text */
+  text-align: center;
+  margin-bottom: 20px;
+}
+input[type="email"], input[type="password"] {
+  width: 100%;
+  padding: 12px;
+  margin: 8px 0;
+  border: none;
+  border-bottom: 2px solid #00d4ff; /* Cyan border */
+  background-color: rgba(255, 255, 255, 0.1); /* Transparent input fields */
+  color: white;
+  font-size: 14px;
+  outline: none;
+  font-family: "Poppins";
+  transition: border-color 0.3s;
+}
+
+input[type="email"]:focus, input[type="password"]:focus {
+  border-bottom: 2px solid #00bfff; /* Bright cyan on focus */
+}
+
+a {
+  color: #f0f0f0; /* Change to a light or cyan color for visibility */
+  text-decoration: none;
+  font-size: 14px;
+  display: block;
+  text-align: center;
+  margin-top: 10px;
+}
+
+a:hover {
+  text-decoration: none;
+  color: #ff0000; /* Lighter cyan on hover */
+}
+
+p {
+  text-align: center;
+  color: #ffffff;
+  font-size: 12px;
+  margin-top: 20px;
+}
+
+button {
+  width: 100%;
+  border-radius: 20px;
+  border: 1px solid #00d4ff; /* Cyan accent */
+  background: linear-gradient(to right, #00d4ff, #008cff); /* Gradient for buttons */
+  color: #ffffff;
+  font-size: 12px;
+  font-family: "Poppins";
+  font-weight: bold;
+  padding: 12px 45px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  transition: transform 80ms ease-in;
+}
+button:hover {
+  background: #0096c7; /* Darker cyan on hover */
+}
+button.ghost {
+  background-color: transparent;
+  border-color: #ffffff; /* White border for ghost button */
+  color: #ffffff;
+}
+
+.container {
+  background-color: rgba(255, 255, 255, 0.1); /* Transparent white background */
+  backdrop-filter: blur(5px); /* Blurred glass effect */
+  border-radius: 10px;
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+  position: relative;
+  overflow: hidden;
+  width: 768px;
+  max-width: 100%;
+  min-height: 480px;
+}
+
+.form-container {
+  position: absolute;
+  top: 0;
+  height: 100%;
+  transition: all 0.6s ease-in-out;
+}
+#login-form, #signup-form {
+  margin-top: 4.5rem;
+}
+
+.sign-up-container {
+  left: 50%;
+  width: 50%;
+  opacity: 0;
+  z-index: 1;
+}
+
+.login-container {
+  left: 0;
+  width: 50%;
+  z-index: 2;
+}
+
+.overlay-container {
+  background: linear-gradient(to top, #070347, #22227e, #1361d6);
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 50%;
+  height: 100%;
+  overflow: hidden;
+  z-index: 100;
+}
+
+.overlay {
+  background: linear-gradient(to top, #070347, #22227e, #1361d6); /* Cyan gradient for overlay */
+  color: #ffffff;
+  position: relative;
+  left: -100%;
+  height: 100%;
+  width: 200%;
+  transition: transform 0.6s ease-in-out;
+}
+
+.overlay-panel {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  padding: 0 40px;
+  text-align: center;
+  top: 0;
+  height: 100%;
+  width: 50%;
+  transform: translateX(0);
+  transition: transform 0.6s ease-in-out;
+}
+
+.overlay-left {
+  background: linear-gradient(to top, #070347, #22227e, #1361d6);
+  transform: translateX(-20%);
+}
+
+.overlay-right {
+  background: linear-gradient(to top, #070347, #22227e, #1361d6);
+  right: 0;
+  transform: translateX(0);
+}
+
+/* Animation for showing the Sign Up form */
+.container.right-panel-active .sign-up-container {
+  transform: translateX(-100%);
+  opacity: 1;
+  z-index: 5;
+}
+
+.container.right-panel-active .login-container {
+  transform: translateX(100%);
+}
+
+.container.right-panel-active .overlay {
+  transform: translateX(50%);
+}
+
+.container.right-panel-active .overlay-left {
+  transform: translateX(0);
+}
+
+.container.right-panel-active .overlay-right {
+  transform: translateX(20%);
+}
+
+/* Input Styles */
+input {
+  background-color: rgba(255, 255, 255, 0.1); /* Transparent input fields */
+  border: none;
+  border-bottom: 1px solid #00d4ff; /* Cyan border for inputs */
+  color: white;
+  padding: 10px;
+  margin: 8px 0;
+  width: 100%;
+  outline: none;
+  font-size: 14px;
+}
+
+input:focus {
+  border-bottom: 1px solid #00d4ff; /* Brighter cyan focus */
+}
