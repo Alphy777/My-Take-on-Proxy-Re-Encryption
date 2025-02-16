@@ -18,6 +18,17 @@ def hash_password(password):
 def serve_index():
     return send_from_directory(app.static_folder, "index.html")
 
+# Fetch active users (all registered users)
+@app.route('/active-users', methods=['GET'])
+def active_users():
+    conn = sqlite3.connect(DB_PATH)
+    cursor = conn.cursor()
+    cursor.execute("SELECT username FROM users")
+    users = [row[0] for row in cursor.fetchall()]
+    conn.close()
+    return jsonify(users)
+
+
 # Serve other static files (login.html, signup.html, CSS, JS)
 @app.route('/<path:filename>')
 def serve_static(filename):
